@@ -43,7 +43,7 @@ run-as org.nativescript.AudioMoth9 ls /data/user/0/org.nativescript.AudioMoth9/f
 4. Install the same plug-ins as before 
 
 ## Improvements to be made 
-- The start button is set to be disabled after it is clicked. Refreshing the app is required to start a new recording session, this is to avoid event collisions. We need to firgure out how to avoid event collisions when "start" is clicked 
+- The start button is set to be disabled after it is clicked. Refreshing the app is required to start a new recording session, this is to avoid event collisions. We need to figure out how to avoid event collisions when "start" is clicked 
 - Audio permissions are requested at the start of the first recording, so we need to figure out how to explicitly ask the user for permissions at the same time as the others
 - Internal temperture sensor remains undetected (could be dependent on device)
 
