@@ -141,10 +141,13 @@ export class HomeViewModel extends Observable {
                   //create file name for each audio recording
                   var fileName = 'AMrec_'+timeStamp+'.aac'
                   console.log("Name of File: "+ fileName)
-                  //TODO: change path 
-                  const filePath = path.join(documents.path, fileName);
+
+                  //TODO: change path to shared: media store 
+                  //const filePath = path.join(documents.path, fileName);//WORKS FOR INTERNAL
+                  const filePath = path.join("/sdcard/Download/", fileName);
+
                   console.log("Path to File:" + filePath);
-                  console.log("Path to Files Folder: " + Application.android.context.getFilesDir())
+                  console.log("Path to Internal Files Folder: " + Application.android.context.getFilesDir())
 
                   //set recording options 
                   const recorderOptions: AudioRecorderOptions = {
@@ -171,7 +174,7 @@ export class HomeViewModel extends Observable {
                       //save recording
                       const exists = File.exists(filePath); 
                       console.log("File exists in Internal: " + exists)
-                      console.log("File exists in External: " + storage.check("/Downloads",fileName))
+                      console.log("File exists in External: " + storage.check("/Download",fileName))
                       if (exists){
                         this.counter++;
                         this.numRecordings = "# of Recordings:  " + this.counter.toString(); 

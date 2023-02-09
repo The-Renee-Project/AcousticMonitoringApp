@@ -31,10 +31,13 @@ export class HelloWorldModel extends Observable {
     this._counter--
     this.updateMessage()
     //const fbScheme = "facebook://"; // works
-    const appScheme = "com.example.myapplication"
+    //const appScheme = "com.example.myapplication"
+    const appScheme = "com.example.myremotedatabaseapp";
     //openUrl(fbScheme);// works
     openUrl(appScheme);
+
     //openApp("com.facebook.katana");
+    //openApp(appScheme);
 
 
   }
