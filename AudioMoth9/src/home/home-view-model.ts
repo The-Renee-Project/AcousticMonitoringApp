@@ -20,7 +20,8 @@ import { DeviceInfo } from "nativescript-dna-deviceinfo";
 
 import { AndroidSensors, AndroidSensorListener, SensorDelay } from 'nativescript-android-sensors';
 import { android } from '@nativescript/core/application';
-
+import { openUrl } from '@nativescript/core/utils'
+import { openApp } from "nativescript-open-app";
 export class HomeViewModel extends Observable {
   constructor() {
     super()
@@ -31,8 +32,6 @@ export class HomeViewModel extends Observable {
     this.geolocation = "";
     var timeStamp = Date.now();
     this.logFile = 'AM_log.txt'
-
-    
     SelectedPageService.getInstance().updateSelectedPage('Home')
   }
 
@@ -89,7 +88,7 @@ export class HomeViewModel extends Observable {
   }
   
 
-
+/*Function */
   onTap() {
     this.message = `Wait to accept Audio Permissions before leaving unattended`;
     this.startBtnStatus = 'false';
@@ -118,6 +117,7 @@ export class HomeViewModel extends Observable {
     //trigger the task dispatcher
     console.info("startEvent emitted!!")
     taskDispatcher.emitEvent("startEvent");
+    //TODO: may need to make a separate event for the birdNet Model
   }
 
   initializeAppTasks(){
@@ -130,21 +130,25 @@ export class HomeViewModel extends Observable {
                   var storage = require("nativescript-android-fs");
 
                   /*
-                  let androidFormat = android.media.MediaRecorder.OutputFormat.MPEG_4;
+                  let androidFormat = android.media.MediaRecorder.OutputFormat.MPEG_4; //2
+                  AAC_ADTS --> 6
                   let androidEncoder = android.media.MediaRecorder.AudioEncoder.AAC;
                   */
-                  let androidFormat = 2;
+                 //TODO: change encoder to wav 
+                  let androidFormat = 6;
                   let androidEncoder = 3;
                   var timeStamp = Date.now();
-                  var fileName = 'AMrec_'+timeStamp+'.mp4'
+                  //create file name for each audio recording
+                  var fileName = 'AMrec_'+timeStamp+'.aac'
                   console.log("Name of File: "+ fileName)
+                  //TODO: change path 
                   const filePath = path.join(documents.path, fileName);
                   console.log("Path to File:" + filePath);
                   console.log("Path to Files Folder: " + Application.android.context.getFilesDir())
 
+                  //set recording options 
                   const recorderOptions: AudioRecorderOptions = {
                     filename: filePath,
-                    //filename: recordingPath,
                     format: androidFormat,
                     encoder: androidEncoder,
                     metering: true,
@@ -155,6 +159,7 @@ export class HomeViewModel extends Observable {
                       console.log(JSON.stringify(errorObject));
                     }
                   };
+                  //start recording
                   log("Recording start!");
                   this.message = `Status: Recording`;
                   this._recorder.start(recorderOptions);
@@ -171,6 +176,7 @@ export class HomeViewModel extends Observable {
                         this.counter++;
                         this.numRecordings = "# of Recordings:  " + this.counter.toString(); 
                       }
+                      //TODO: save recording to data base? 
                       resolve();
                   }, 10000); //record for 10 seconds
 
@@ -233,7 +239,29 @@ export class HomeViewModel extends Observable {
           resolve();
         });
         })
-      ),          
+
+        
+        
+      ),    
+      //new task to call ML model app 
+      new SimpleTask("birdNet", ({ log, onCancel, remainingTime}) => new Promise( (resolve) => {
+        
+        //TODO: open new app  to call ML model 
+        //might need to use a time out to run a minute latter to not mess with audio permission
+
+        const fbScheme = "facebook://"; // works
+        const appScheme = "com.example.myapplication"
+        openUrl(fbScheme);//uses with fb Scheme
+        //openUrl(appScheme);
+        //openApp("com.facebook.katana");
+
+        resolve();
+        onCancel(() => {
+          resolve();
+        });
+      })
+      )
+        
     ];
   }
 

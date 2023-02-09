@@ -15,6 +15,7 @@
     "nativescript-audio": "^6.2.6",
     "nativescript-audio-jf": "^1.0.2",
     "nativescript-dna-deviceinfo": "^3.7.3",
+    "nativescript-open-app": "^0.3.0",
     "nativescript-powerinfo": "^1.0.7",
     "nativescript-task-dispatcher": "^3.1.1",
     "nativescript-ui-sidedrawer": "~10.0.2",

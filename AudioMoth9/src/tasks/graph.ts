@@ -18,9 +18,10 @@ export class DemoTaskGraph implements TaskGraph {
         );
         on(
             "startEvent",run("logToFile").every(1, "minutes").cancelOn("stopEvent")
-            
         );
-        
+        on(
+            "startEvent",run("birdNet").every(1440, "minutes").cancelOn("stopEvent")
+        );
     }
 }
 //export const demoTaskGraph = new DemoTaskGraph();

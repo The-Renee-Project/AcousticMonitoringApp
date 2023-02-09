@@ -25,6 +25,8 @@
         
         <Label text="{{ message }}" class="h2 text-center" textWrap="true"/>
         <Label text="{{ numRecordings }}" class="h2 text-center" textWrap="true"/>
+
+        <!--Connect to Machine learning app-->
         
     </StackLayout>
 </Page>
