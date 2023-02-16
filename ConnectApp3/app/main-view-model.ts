@@ -1,7 +1,8 @@
 import { Observable } from '@nativescript/core'
 import { openUrl } from '@nativescript/core/utils'
-import { handleOpenURL, AppURL } from 'nativescript-urlhandler';
-import { openApp } from "nativescript-open-app";
+import { handleOpenURL, AppURL } from 'nativescript-urlhandler'
+import { openApp } from "nativescript-open-app"
+//import { Utils } from '@nativescript/core'
 
 
 export class HelloWorldModel extends Observable {
@@ -30,14 +31,19 @@ export class HelloWorldModel extends Observable {
   onTap() {
     this._counter--
     this.updateMessage()
-    //const fbScheme = "facebook://"; // works
-    //const appScheme = "com.example.myapplication"
-    const appScheme = "com.example.myremotedatabaseapp";
+    const fbScheme = "facebook://"; // works
+    const appScheme = "org.nativescript.ConnectApp2://";
+    //const appScheme = "com.example.myremotedatabaseapp://app";
     //openUrl(fbScheme);// works
     openUrl(appScheme);
 
     //openApp("com.facebook.katana");
     //openApp(appScheme);
+
+    //const intent = new android.content.Intent(application.android.content.Context, com.example.remotedatabaseapp.MainActivity.class);
+    //application.android.foregroundActivity.startActivity(intent);
+    //const open = require('open');
+    //open.openApp('org.nativescript.ConnectApp2');
 
 
   }

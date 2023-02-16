@@ -252,9 +252,9 @@ export class HomeViewModel extends Observable {
         //TODO: open new app  to call ML model 
         //might need to use a time out to run a minute latter to not mess with audio permission
 
-        const fbScheme = "facebook://"; // works
-        const appScheme = "com.example.myapplication"
-        openUrl(fbScheme);//uses with fb Scheme
+        //const fbScheme = "facebook://"; // works
+        //const appScheme = "com.example.myapplication"
+        //openUrl(fbScheme);//uses with fb Scheme
         //openUrl(appScheme);
         //openApp("com.facebook.katana");
 
