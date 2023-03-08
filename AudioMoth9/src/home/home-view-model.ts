@@ -4,8 +4,7 @@ import { Observable } from '@nativescript/core'
 import { SelectedPageService } from '../shared/selected-page-service'
 import {
   Application,Dialogs,File,isAndroid,knownFolders,
-  Page,Slider,Utils,CoreTypes,path,
-} from '@nativescript/core';
+  Page,Slider,Utils,CoreTypes,path,Device} from '@nativescript/core';
 import { Task, SimpleTask } from "nativescript-task-dispatcher/tasks";
 import { DemoTaskGraph } from "../tasks/graph";
 import { taskDispatcher } from "nativescript-task-dispatcher";
@@ -19,9 +18,12 @@ CoreTypes.Accuracy; // used to describe at what accuracy the location should be 
 import { DeviceInfo } from "nativescript-dna-deviceinfo";
 
 import { AndroidSensors, AndroidSensorListener, SensorDelay } from 'nativescript-android-sensors';
-import { android } from '@nativescript/core/application';
+import { android, AndroidApplication } from '@nativescript/core/application';
 import { openUrl } from '@nativescript/core/utils'
 import { openApp } from "nativescript-open-app";
+//import {permssiona} from "nativescript-permissions";
+import * as fs from 'fs';
+
 export class HomeViewModel extends Observable {
   constructor() {
     super()
@@ -113,7 +115,6 @@ export class HomeViewModel extends Observable {
       this.getLocation();
       }, 10000);  
     
-
     //trigger the task dispatcher
     console.info("startEvent emitted!!")
     taskDispatcher.emitEvent("startEvent");
@@ -126,8 +127,10 @@ export class HomeViewModel extends Observable {
                   log(`Available time: ${remainingTime()}`);
                   this._recorder = new TNSRecorder();
                   this._recorder.debug = true; 
+
                   const documents = knownFolders.documents();
                   var storage = require("nativescript-android-fs");
+                  
 
                   /*
                   let androidFormat = android.media.MediaRecorder.OutputFormat.MPEG_4; //2
@@ -135,17 +138,19 @@ export class HomeViewModel extends Observable {
                   let androidEncoder = android.media.MediaRecorder.AudioEncoder.AAC;
                   */
                  //TODO: change encoder to wav 
-                  let androidFormat = 6;
+                  let androidFormat = 2;
                   let androidEncoder = 3;
                   var timeStamp = Date.now();
                   //create file name for each audio recording
-                  var fileName = 'AMrec_'+timeStamp+'.aac'
+                  var fileName = 'AMrec_'+timeStamp+'.mp4'
                   console.log("Name of File: "+ fileName)
 
                   //TODO: change path to shared: media store 
-                  //const filePath = path.join(documents.path, fileName);//WORKS FOR INTERNAL
-                  const filePath = path.join("/sdcard/Download/", fileName);
-
+                  const filePath = path.join(documents.path, fileName);//WORKS FOR INTERNAL
+                  //const filePath = path.join(Application.android.context.getFilesDir(), fileName);
+                  //const filePath = path.join(storage, fileName)
+                  //const filePath = path.join(Application.android.
+                  
                   console.log("Path to File:" + filePath);
                   console.log("Path to Internal Files Folder: " + Application.android.context.getFilesDir())
 
@@ -174,6 +179,8 @@ export class HomeViewModel extends Observable {
                       //save recording
                       const exists = File.exists(filePath); 
                       console.log("File exists in Internal: " + exists)
+                      //storage.permission("/Download", fileName); 
+                      //storage.save("/Download", fileName);
                       console.log("File exists in External: " + storage.check("/Download",fileName))
                       if (exists){
                         this.counter++;
